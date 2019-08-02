@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateObjective {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -16,6 +20,12 @@ scalar DateTime
 scalar Long
 
 type Mutation {
+  createObjective(data: ObjectiveCreateInput!): Objective!
+  updateObjective(data: ObjectiveUpdateInput!, where: ObjectiveWhereUniqueInput!): Objective
+  updateManyObjectives(data: ObjectiveUpdateManyMutationInput!, where: ObjectiveWhereInput): BatchPayload!
+  upsertObjective(where: ObjectiveWhereUniqueInput!, create: ObjectiveCreateInput!, update: ObjectiveUpdateInput!): Objective!
+  deleteObjective(where: ObjectiveWhereUniqueInput!): Objective
+  deleteManyObjectives(where: ObjectiveWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -34,6 +44,279 @@ interface Node {
   id: ID!
 }
 
+type Objective {
+  id: ID!
+  name: String!
+  description: String!
+  user: User!
+  status: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type ObjectiveConnection {
+  pageInfo: PageInfo!
+  edges: [ObjectiveEdge]!
+  aggregate: AggregateObjective!
+}
+
+input ObjectiveCreateInput {
+  id: ID
+  name: String!
+  description: String!
+  user: UserCreateOneWithoutObjectivesInput!
+  status: Boolean
+}
+
+input ObjectiveCreateManyWithoutUserInput {
+  create: [ObjectiveCreateWithoutUserInput!]
+  connect: [ObjectiveWhereUniqueInput!]
+}
+
+input ObjectiveCreateWithoutUserInput {
+  id: ID
+  name: String!
+  description: String!
+  status: Boolean
+}
+
+type ObjectiveEdge {
+  node: Objective!
+  cursor: String!
+}
+
+enum ObjectiveOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  status_ASC
+  status_DESC
+  created_at_ASC
+  created_at_DESC
+  updated_at_ASC
+  updated_at_DESC
+}
+
+type ObjectivePreviousValues {
+  id: ID!
+  name: String!
+  description: String!
+  status: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input ObjectiveScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  status: Boolean
+  status_not: Boolean
+  created_at: DateTime
+  created_at_not: DateTime
+  created_at_in: [DateTime!]
+  created_at_not_in: [DateTime!]
+  created_at_lt: DateTime
+  created_at_lte: DateTime
+  created_at_gt: DateTime
+  created_at_gte: DateTime
+  updated_at: DateTime
+  updated_at_not: DateTime
+  updated_at_in: [DateTime!]
+  updated_at_not_in: [DateTime!]
+  updated_at_lt: DateTime
+  updated_at_lte: DateTime
+  updated_at_gt: DateTime
+  updated_at_gte: DateTime
+  AND: [ObjectiveScalarWhereInput!]
+  OR: [ObjectiveScalarWhereInput!]
+  NOT: [ObjectiveScalarWhereInput!]
+}
+
+type ObjectiveSubscriptionPayload {
+  mutation: MutationType!
+  node: Objective
+  updatedFields: [String!]
+  previousValues: ObjectivePreviousValues
+}
+
+input ObjectiveSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ObjectiveWhereInput
+  AND: [ObjectiveSubscriptionWhereInput!]
+  OR: [ObjectiveSubscriptionWhereInput!]
+  NOT: [ObjectiveSubscriptionWhereInput!]
+}
+
+input ObjectiveUpdateInput {
+  name: String
+  description: String
+  user: UserUpdateOneRequiredWithoutObjectivesInput
+  status: Boolean
+}
+
+input ObjectiveUpdateManyDataInput {
+  name: String
+  description: String
+  status: Boolean
+}
+
+input ObjectiveUpdateManyMutationInput {
+  name: String
+  description: String
+  status: Boolean
+}
+
+input ObjectiveUpdateManyWithoutUserInput {
+  create: [ObjectiveCreateWithoutUserInput!]
+  delete: [ObjectiveWhereUniqueInput!]
+  connect: [ObjectiveWhereUniqueInput!]
+  set: [ObjectiveWhereUniqueInput!]
+  disconnect: [ObjectiveWhereUniqueInput!]
+  update: [ObjectiveUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ObjectiveUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ObjectiveScalarWhereInput!]
+  updateMany: [ObjectiveUpdateManyWithWhereNestedInput!]
+}
+
+input ObjectiveUpdateManyWithWhereNestedInput {
+  where: ObjectiveScalarWhereInput!
+  data: ObjectiveUpdateManyDataInput!
+}
+
+input ObjectiveUpdateWithoutUserDataInput {
+  name: String
+  description: String
+  status: Boolean
+}
+
+input ObjectiveUpdateWithWhereUniqueWithoutUserInput {
+  where: ObjectiveWhereUniqueInput!
+  data: ObjectiveUpdateWithoutUserDataInput!
+}
+
+input ObjectiveUpsertWithWhereUniqueWithoutUserInput {
+  where: ObjectiveWhereUniqueInput!
+  update: ObjectiveUpdateWithoutUserDataInput!
+  create: ObjectiveCreateWithoutUserInput!
+}
+
+input ObjectiveWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  user: UserWhereInput
+  status: Boolean
+  status_not: Boolean
+  created_at: DateTime
+  created_at_not: DateTime
+  created_at_in: [DateTime!]
+  created_at_not_in: [DateTime!]
+  created_at_lt: DateTime
+  created_at_lte: DateTime
+  created_at_gt: DateTime
+  created_at_gte: DateTime
+  updated_at: DateTime
+  updated_at_not: DateTime
+  updated_at_in: [DateTime!]
+  updated_at_not_in: [DateTime!]
+  updated_at_lt: DateTime
+  updated_at_lte: DateTime
+  updated_at_gt: DateTime
+  updated_at_gte: DateTime
+  AND: [ObjectiveWhereInput!]
+  OR: [ObjectiveWhereInput!]
+  NOT: [ObjectiveWhereInput!]
+}
+
+input ObjectiveWhereUniqueInput {
+  id: ID
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -42,6 +325,9 @@ type PageInfo {
 }
 
 type Query {
+  objective(where: ObjectiveWhereUniqueInput!): Objective
+  objectives(where: ObjectiveWhereInput, orderBy: ObjectiveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Objective]!
+  objectivesConnection(where: ObjectiveWhereInput, orderBy: ObjectiveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ObjectiveConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -49,6 +335,7 @@ type Query {
 }
 
 type Subscription {
+  objective(where: ObjectiveSubscriptionWhereInput): ObjectiveSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -57,6 +344,8 @@ type User {
   name: String!
   email: String!
   password: String!
+  teste: String!
+  objectives(where: ObjectiveWhereInput, orderBy: ObjectiveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Objective!]
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -72,6 +361,21 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  teste: String!
+  objectives: ObjectiveCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutObjectivesInput {
+  create: UserCreateWithoutObjectivesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutObjectivesInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  teste: String!
 }
 
 type UserEdge {
@@ -88,6 +392,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  teste_ASC
+  teste_DESC
   created_at_ASC
   created_at_DESC
   updated_at_ASC
@@ -99,6 +405,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  teste: String!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -125,12 +432,34 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  teste: String
+  objectives: ObjectiveUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  teste: String
+}
+
+input UserUpdateOneRequiredWithoutObjectivesInput {
+  create: UserCreateWithoutObjectivesInput
+  update: UserUpdateWithoutObjectivesDataInput
+  upsert: UserUpsertWithoutObjectivesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutObjectivesDataInput {
+  name: String
+  email: String
+  password: String
+  teste: String
+}
+
+input UserUpsertWithoutObjectivesInput {
+  update: UserUpdateWithoutObjectivesDataInput!
+  create: UserCreateWithoutObjectivesInput!
 }
 
 input UserWhereInput {
@@ -190,6 +519,23 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  teste: String
+  teste_not: String
+  teste_in: [String!]
+  teste_not_in: [String!]
+  teste_lt: String
+  teste_lte: String
+  teste_gt: String
+  teste_gte: String
+  teste_contains: String
+  teste_not_contains: String
+  teste_starts_with: String
+  teste_not_starts_with: String
+  teste_ends_with: String
+  teste_not_ends_with: String
+  objectives_every: ObjectiveWhereInput
+  objectives_some: ObjectiveWhereInput
+  objectives_none: ObjectiveWhereInput
   created_at: DateTime
   created_at_not: DateTime
   created_at_in: [DateTime!]

@@ -3,19 +3,19 @@ type User {
   name: String!
   email: String!
   password: String!
+  teste: String!
+  objectives: [Objective!]! @relation(name: "ObjectivesByUser", onDelete: CASCADE)
   created_at: DateTime! @createdAt
   updated_at: DateTime! @updatedAt
-  objectives: [Objective!]!
 }
 
 type Objective {
   id: ID! @id
   name: String!
   description: String!
-  user_id: User @relation(link: INLINE)
-  status: Boolean! default(value: false)
+  user: User! @relation(name: "ObjectivesByUser")
+  status: Boolean! @default(value: false)
   created_at: DateTime! @createdAt
   updated_at: DateTime! @updatedAt
-
 }
 

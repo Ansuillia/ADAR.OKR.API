@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  objective: (where?: ObjectiveWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  objective: (where: ObjectiveWhereUniqueInput) => ObjectiveNullablePromise;
+  objectives: (args?: {
+    where?: ObjectiveWhereInput;
+    orderBy?: ObjectiveOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Objective>;
+  objectivesConnection: (args?: {
+    where?: ObjectiveWhereInput;
+    orderBy?: ObjectiveOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ObjectiveConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createObjective: (data: ObjectiveCreateInput) => ObjectivePromise;
+  updateObjective: (args: {
+    data: ObjectiveUpdateInput;
+    where: ObjectiveWhereUniqueInput;
+  }) => ObjectivePromise;
+  updateManyObjectives: (args: {
+    data: ObjectiveUpdateManyMutationInput;
+    where?: ObjectiveWhereInput;
+  }) => BatchPayloadPromise;
+  upsertObjective: (args: {
+    where: ObjectiveWhereUniqueInput;
+    create: ObjectiveCreateInput;
+    update: ObjectiveUpdateInput;
+  }) => ObjectivePromise;
+  deleteObjective: (where: ObjectiveWhereUniqueInput) => ObjectivePromise;
+  deleteManyObjectives: (where?: ObjectiveWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  objective: (
+    where?: ObjectiveSubscriptionWhereInput
+  ) => ObjectiveSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -101,6 +140,20 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type ObjectiveOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "created_at_ASC"
+  | "created_at_DESC"
+  | "updated_at_ASC"
+  | "updated_at_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -110,6 +163,8 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
+  | "teste_ASC"
+  | "teste_DESC"
   | "created_at_ASC"
   | "created_at_DESC"
   | "updated_at_ASC"
@@ -117,17 +172,282 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
+export interface UserUpdateOneRequiredWithoutObjectivesInput {
+  create?: Maybe<UserCreateWithoutObjectivesInput>;
+  update?: Maybe<UserUpdateWithoutObjectivesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutObjectivesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type ObjectiveWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpsertWithoutObjectivesInput {
+  update: UserUpdateWithoutObjectivesDataInput;
+  create: UserCreateWithoutObjectivesInput;
+}
+
+export interface ObjectiveWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  status?: Maybe<Boolean>;
+  status_not?: Maybe<Boolean>;
+  created_at?: Maybe<DateTimeInput>;
+  created_at_not?: Maybe<DateTimeInput>;
+  created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  created_at_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  created_at_lt?: Maybe<DateTimeInput>;
+  created_at_lte?: Maybe<DateTimeInput>;
+  created_at_gt?: Maybe<DateTimeInput>;
+  created_at_gte?: Maybe<DateTimeInput>;
+  updated_at?: Maybe<DateTimeInput>;
+  updated_at_not?: Maybe<DateTimeInput>;
+  updated_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updated_at_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updated_at_lt?: Maybe<DateTimeInput>;
+  updated_at_lte?: Maybe<DateTimeInput>;
+  updated_at_gt?: Maybe<DateTimeInput>;
+  updated_at_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ObjectiveWhereInput[] | ObjectiveWhereInput>;
+  OR?: Maybe<ObjectiveWhereInput[] | ObjectiveWhereInput>;
+  NOT?: Maybe<ObjectiveWhereInput[] | ObjectiveWhereInput>;
+}
+
+export interface ObjectiveUpdateManyWithoutUserInput {
+  create?: Maybe<
+    ObjectiveCreateWithoutUserInput[] | ObjectiveCreateWithoutUserInput
+  >;
+  delete?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
+  connect?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
+  set?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
+  disconnect?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
+  update?: Maybe<
+    | ObjectiveUpdateWithWhereUniqueWithoutUserInput[]
+    | ObjectiveUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ObjectiveUpsertWithWhereUniqueWithoutUserInput[]
+    | ObjectiveUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ObjectiveScalarWhereInput[] | ObjectiveScalarWhereInput>;
+  updateMany?: Maybe<
+    | ObjectiveUpdateManyWithWhereNestedInput[]
+    | ObjectiveUpdateManyWithWhereNestedInput
+  >;
+}
+
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
+  teste: String;
+  objectives?: Maybe<ObjectiveCreateManyWithoutUserInput>;
+}
+
+export interface ObjectiveUpdateManyMutationInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  status?: Maybe<Boolean>;
+}
+
+export interface ObjectiveSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ObjectiveWhereInput>;
+  AND?: Maybe<
+    ObjectiveSubscriptionWhereInput[] | ObjectiveSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ObjectiveSubscriptionWhereInput[] | ObjectiveSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ObjectiveSubscriptionWhereInput[] | ObjectiveSubscriptionWhereInput
+  >;
+}
+
+export interface ObjectiveCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description: String;
+  user: UserCreateOneWithoutObjectivesInput;
+  status?: Maybe<Boolean>;
+}
+
+export interface ObjectiveUpdateManyDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  status?: Maybe<Boolean>;
+}
+
+export interface UserCreateOneWithoutObjectivesInput {
+  create?: Maybe<UserCreateWithoutObjectivesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface ObjectiveScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  status?: Maybe<Boolean>;
+  status_not?: Maybe<Boolean>;
+  created_at?: Maybe<DateTimeInput>;
+  created_at_not?: Maybe<DateTimeInput>;
+  created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  created_at_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  created_at_lt?: Maybe<DateTimeInput>;
+  created_at_lte?: Maybe<DateTimeInput>;
+  created_at_gt?: Maybe<DateTimeInput>;
+  created_at_gte?: Maybe<DateTimeInput>;
+  updated_at?: Maybe<DateTimeInput>;
+  updated_at_not?: Maybe<DateTimeInput>;
+  updated_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updated_at_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updated_at_lt?: Maybe<DateTimeInput>;
+  updated_at_lte?: Maybe<DateTimeInput>;
+  updated_at_gt?: Maybe<DateTimeInput>;
+  updated_at_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ObjectiveScalarWhereInput[] | ObjectiveScalarWhereInput>;
+  OR?: Maybe<ObjectiveScalarWhereInput[] | ObjectiveScalarWhereInput>;
+  NOT?: Maybe<ObjectiveScalarWhereInput[] | ObjectiveScalarWhereInput>;
+}
+
+export interface UserCreateWithoutObjectivesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  teste: String;
+}
+
+export interface ObjectiveUpsertWithWhereUniqueWithoutUserInput {
+  where: ObjectiveWhereUniqueInput;
+  update: ObjectiveUpdateWithoutUserDataInput;
+  create: ObjectiveCreateWithoutUserInput;
+}
+
+export interface ObjectiveUpdateInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutObjectivesInput>;
+  status?: Maybe<Boolean>;
+}
+
+export interface ObjectiveUpdateWithWhereUniqueWithoutUserInput {
+  where: ObjectiveWhereUniqueInput;
+  data: ObjectiveUpdateWithoutUserDataInput;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  teste?: Maybe<String>;
+  objectives?: Maybe<ObjectiveUpdateManyWithoutUserInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teste?: Maybe<String>;
+}
+
+export interface ObjectiveCreateManyWithoutUserInput {
+  create?: Maybe<
+    ObjectiveCreateWithoutUserInput[] | ObjectiveCreateWithoutUserInput
+  >;
+  connect?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
+}
+
+export interface ObjectiveCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description: String;
+  status?: Maybe<Boolean>;
 }
 
 export interface UserWhereInput {
@@ -187,6 +507,23 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
+  teste?: Maybe<String>;
+  teste_not?: Maybe<String>;
+  teste_in?: Maybe<String[] | String>;
+  teste_not_in?: Maybe<String[] | String>;
+  teste_lt?: Maybe<String>;
+  teste_lte?: Maybe<String>;
+  teste_gt?: Maybe<String>;
+  teste_gte?: Maybe<String>;
+  teste_contains?: Maybe<String>;
+  teste_not_contains?: Maybe<String>;
+  teste_starts_with?: Maybe<String>;
+  teste_not_starts_with?: Maybe<String>;
+  teste_ends_with?: Maybe<String>;
+  teste_not_ends_with?: Maybe<String>;
+  objectives_every?: Maybe<ObjectiveWhereInput>;
+  objectives_some?: Maybe<ObjectiveWhereInput>;
+  objectives_none?: Maybe<ObjectiveWhereInput>;
   created_at?: Maybe<DateTimeInput>;
   created_at_not?: Maybe<DateTimeInput>;
   created_at_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -208,10 +545,16 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface UserUpdateWithoutObjectivesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  teste?: Maybe<String>;
+}
+
+export interface ObjectiveUpdateManyWithWhereNestedInput {
+  where: ObjectiveScalarWhereInput;
+  data: ObjectiveUpdateManyDataInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -225,6 +568,12 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
+export interface ObjectiveUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  status?: Maybe<Boolean>;
+}
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -233,21 +582,287 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface UserEdge {
-  node: User;
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  teste: String;
+  created_at: DateTimeOutput;
+  updated_at: DateTimeOutput;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teste: () => Promise<String>;
+  created_at: () => Promise<DateTimeOutput>;
+  updated_at: () => Promise<DateTimeOutput>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teste: () => Promise<AsyncIterator<String>>;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ObjectivePreviousValues {
+  id: ID_Output;
+  name: String;
+  description: String;
+  status: Boolean;
+  created_at: DateTimeOutput;
+  updated_at: DateTimeOutput;
+}
+
+export interface ObjectivePreviousValuesPromise
+  extends Promise<ObjectivePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  status: () => Promise<Boolean>;
+  created_at: () => Promise<DateTimeOutput>;
+  updated_at: () => Promise<DateTimeOutput>;
+}
+
+export interface ObjectivePreviousValuesSubscription
+  extends Promise<AsyncIterator<ObjectivePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<Boolean>>;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface Objective {
+  id: ID_Output;
+  name: String;
+  description: String;
+  status: Boolean;
+  created_at: DateTimeOutput;
+  updated_at: DateTimeOutput;
+}
+
+export interface ObjectivePromise extends Promise<Objective>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+  status: () => Promise<Boolean>;
+  created_at: () => Promise<DateTimeOutput>;
+  updated_at: () => Promise<DateTimeOutput>;
+}
+
+export interface ObjectiveSubscription
+  extends Promise<AsyncIterator<Objective>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+  status: () => Promise<AsyncIterator<Boolean>>;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ObjectiveNullablePromise
+  extends Promise<Objective | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+  status: () => Promise<Boolean>;
+  created_at: () => Promise<DateTimeOutput>;
+  updated_at: () => Promise<DateTimeOutput>;
+}
+
+export interface AggregateObjective {
+  count: Int;
+}
+
+export interface AggregateObjectivePromise
+  extends Promise<AggregateObjective>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateObjectiveSubscription
+  extends Promise<AsyncIterator<AggregateObjective>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ObjectiveEdge {
+  node: Objective;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface ObjectiveEdgePromise
+  extends Promise<ObjectiveEdge>,
+    Fragmentable {
+  node: <T = ObjectivePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface ObjectiveEdgeSubscription
+  extends Promise<AsyncIterator<ObjectiveEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = ObjectiveSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface User {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  teste: String;
+  created_at: DateTimeOutput;
+  updated_at: DateTimeOutput;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teste: () => Promise<String>;
+  objectives: <T = FragmentableArray<Objective>>(args?: {
+    where?: ObjectiveWhereInput;
+    orderBy?: ObjectiveOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  created_at: () => Promise<DateTimeOutput>;
+  updated_at: () => Promise<DateTimeOutput>;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teste: () => Promise<AsyncIterator<String>>;
+  objectives: <T = Promise<AsyncIterator<ObjectiveSubscription>>>(args?: {
+    where?: ObjectiveWhereInput;
+    orderBy?: ObjectiveOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teste: () => Promise<String>;
+  objectives: <T = FragmentableArray<Objective>>(args?: {
+    where?: ObjectiveWhereInput;
+    orderBy?: ObjectiveOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  created_at: () => Promise<DateTimeOutput>;
+  updated_at: () => Promise<DateTimeOutput>;
+}
+
+export interface ObjectiveSubscriptionPayload {
+  mutation: MutationType;
+  node: Objective;
+  updatedFields: String[];
+  previousValues: ObjectivePreviousValues;
+}
+
+export interface ObjectiveSubscriptionPayloadPromise
+  extends Promise<ObjectiveSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ObjectivePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ObjectivePreviousValuesPromise>() => T;
+}
+
+export interface ObjectiveSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ObjectiveSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ObjectiveSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ObjectivePreviousValuesSubscription>() => T;
+}
+
+export interface ObjectiveConnection {
+  pageInfo: PageInfo;
+  edges: ObjectiveEdge[];
+}
+
+export interface ObjectiveConnectionPromise
+  extends Promise<ObjectiveConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ObjectiveEdge>>() => T;
+  aggregate: <T = AggregateObjectivePromise>() => T;
+}
+
+export interface ObjectiveConnectionSubscription
+  extends Promise<AsyncIterator<ObjectiveConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ObjectiveEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateObjectiveSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BatchPayload {
@@ -266,44 +881,20 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface User {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-  created_at: DateTimeOutput;
-  updated_at: DateTimeOutput;
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  created_at: () => Promise<DateTimeOutput>;
-  updated_at: () => Promise<DateTimeOutput>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  count: () => Promise<Int>;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  created_at: () => Promise<DateTimeOutput>;
-  updated_at: () => Promise<DateTimeOutput>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -352,74 +943,21 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface UserEdge {
+  node: User;
+  cursor: String;
 }
 
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-  created_at: DateTimeOutput;
-  updated_at: DateTimeOutput;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  created_at: () => Promise<DateTimeOutput>;
-  updated_at: () => Promise<DateTimeOutput>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -432,15 +970,12 @@ DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
 
+export type Long = string;
+
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -453,7 +988,10 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string;
 
-export type Long = string;
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 /**
  * Model Metadata
@@ -462,6 +1000,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Objective",
     embedded: false
   }
 ];
