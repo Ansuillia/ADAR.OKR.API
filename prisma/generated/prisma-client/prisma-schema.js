@@ -48,7 +48,7 @@ type Objective {
   id: ID!
   name: String!
   description: String!
-  user: User!
+  author: User!
   status: Boolean!
   created_at: DateTime!
   updated_at: DateTime!
@@ -64,16 +64,16 @@ input ObjectiveCreateInput {
   id: ID
   name: String!
   description: String!
-  user: UserCreateOneWithoutObjectivesInput!
+  author: UserCreateOneWithoutObjectivesInput!
   status: Boolean
 }
 
-input ObjectiveCreateManyWithoutUserInput {
-  create: [ObjectiveCreateWithoutUserInput!]
+input ObjectiveCreateManyWithoutAuthorInput {
+  create: [ObjectiveCreateWithoutAuthorInput!]
   connect: [ObjectiveWhereUniqueInput!]
 }
 
-input ObjectiveCreateWithoutUserInput {
+input ObjectiveCreateWithoutAuthorInput {
   id: ID
   name: String!
   description: String!
@@ -196,7 +196,7 @@ input ObjectiveSubscriptionWhereInput {
 input ObjectiveUpdateInput {
   name: String
   description: String
-  user: UserUpdateOneRequiredWithoutObjectivesInput
+  author: UserUpdateOneRequiredWithoutObjectivesInput
   status: Boolean
 }
 
@@ -212,14 +212,14 @@ input ObjectiveUpdateManyMutationInput {
   status: Boolean
 }
 
-input ObjectiveUpdateManyWithoutUserInput {
-  create: [ObjectiveCreateWithoutUserInput!]
+input ObjectiveUpdateManyWithoutAuthorInput {
+  create: [ObjectiveCreateWithoutAuthorInput!]
   delete: [ObjectiveWhereUniqueInput!]
   connect: [ObjectiveWhereUniqueInput!]
   set: [ObjectiveWhereUniqueInput!]
   disconnect: [ObjectiveWhereUniqueInput!]
-  update: [ObjectiveUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [ObjectiveUpsertWithWhereUniqueWithoutUserInput!]
+  update: [ObjectiveUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [ObjectiveUpsertWithWhereUniqueWithoutAuthorInput!]
   deleteMany: [ObjectiveScalarWhereInput!]
   updateMany: [ObjectiveUpdateManyWithWhereNestedInput!]
 }
@@ -229,21 +229,21 @@ input ObjectiveUpdateManyWithWhereNestedInput {
   data: ObjectiveUpdateManyDataInput!
 }
 
-input ObjectiveUpdateWithoutUserDataInput {
+input ObjectiveUpdateWithoutAuthorDataInput {
   name: String
   description: String
   status: Boolean
 }
 
-input ObjectiveUpdateWithWhereUniqueWithoutUserInput {
+input ObjectiveUpdateWithWhereUniqueWithoutAuthorInput {
   where: ObjectiveWhereUniqueInput!
-  data: ObjectiveUpdateWithoutUserDataInput!
+  data: ObjectiveUpdateWithoutAuthorDataInput!
 }
 
-input ObjectiveUpsertWithWhereUniqueWithoutUserInput {
+input ObjectiveUpsertWithWhereUniqueWithoutAuthorInput {
   where: ObjectiveWhereUniqueInput!
-  update: ObjectiveUpdateWithoutUserDataInput!
-  create: ObjectiveCreateWithoutUserInput!
+  update: ObjectiveUpdateWithoutAuthorDataInput!
+  create: ObjectiveCreateWithoutAuthorInput!
 }
 
 input ObjectiveWhereInput {
@@ -289,7 +289,7 @@ input ObjectiveWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  user: UserWhereInput
+  author: UserWhereInput
   status: Boolean
   status_not: Boolean
   created_at: DateTime
@@ -344,7 +344,6 @@ type User {
   name: String!
   email: String!
   password: String!
-  teste: String!
   objectives(where: ObjectiveWhereInput, orderBy: ObjectiveOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Objective!]
   created_at: DateTime!
   updated_at: DateTime!
@@ -361,8 +360,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  teste: String!
-  objectives: ObjectiveCreateManyWithoutUserInput
+  objectives: ObjectiveCreateManyWithoutAuthorInput
 }
 
 input UserCreateOneWithoutObjectivesInput {
@@ -375,7 +373,6 @@ input UserCreateWithoutObjectivesInput {
   name: String!
   email: String!
   password: String!
-  teste: String!
 }
 
 type UserEdge {
@@ -392,8 +389,6 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  teste_ASC
-  teste_DESC
   created_at_ASC
   created_at_DESC
   updated_at_ASC
@@ -405,7 +400,6 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  teste: String!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -432,15 +426,13 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  teste: String
-  objectives: ObjectiveUpdateManyWithoutUserInput
+  objectives: ObjectiveUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
-  teste: String
 }
 
 input UserUpdateOneRequiredWithoutObjectivesInput {
@@ -454,7 +446,6 @@ input UserUpdateWithoutObjectivesDataInput {
   name: String
   email: String
   password: String
-  teste: String
 }
 
 input UserUpsertWithoutObjectivesInput {
@@ -519,20 +510,6 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  teste: String
-  teste_not: String
-  teste_in: [String!]
-  teste_not_in: [String!]
-  teste_lt: String
-  teste_lte: String
-  teste_gt: String
-  teste_gte: String
-  teste_contains: String
-  teste_not_contains: String
-  teste_starts_with: String
-  teste_not_starts_with: String
-  teste_ends_with: String
-  teste_not_ends_with: String
   objectives_every: ObjectiveWhereInput
   objectives_some: ObjectiveWhereInput
   objectives_none: ObjectiveWhereInput

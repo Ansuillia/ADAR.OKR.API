@@ -163,8 +163,6 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
-  | "teste_ASC"
-  | "teste_DESC"
   | "created_at_ASC"
   | "created_at_DESC"
   | "updated_at_ASC"
@@ -231,7 +229,7 @@ export interface ObjectiveWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  user?: Maybe<UserWhereInput>;
+  author?: Maybe<UserWhereInput>;
   status?: Maybe<Boolean>;
   status_not?: Maybe<Boolean>;
   created_at?: Maybe<DateTimeInput>;
@@ -255,21 +253,21 @@ export interface ObjectiveWhereInput {
   NOT?: Maybe<ObjectiveWhereInput[] | ObjectiveWhereInput>;
 }
 
-export interface ObjectiveUpdateManyWithoutUserInput {
+export interface ObjectiveUpdateManyWithoutAuthorInput {
   create?: Maybe<
-    ObjectiveCreateWithoutUserInput[] | ObjectiveCreateWithoutUserInput
+    ObjectiveCreateWithoutAuthorInput[] | ObjectiveCreateWithoutAuthorInput
   >;
   delete?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
   connect?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
   set?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
   disconnect?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
   update?: Maybe<
-    | ObjectiveUpdateWithWhereUniqueWithoutUserInput[]
-    | ObjectiveUpdateWithWhereUniqueWithoutUserInput
+    | ObjectiveUpdateWithWhereUniqueWithoutAuthorInput[]
+    | ObjectiveUpdateWithWhereUniqueWithoutAuthorInput
   >;
   upsert?: Maybe<
-    | ObjectiveUpsertWithWhereUniqueWithoutUserInput[]
-    | ObjectiveUpsertWithWhereUniqueWithoutUserInput
+    | ObjectiveUpsertWithWhereUniqueWithoutAuthorInput[]
+    | ObjectiveUpsertWithWhereUniqueWithoutAuthorInput
   >;
   deleteMany?: Maybe<ObjectiveScalarWhereInput[] | ObjectiveScalarWhereInput>;
   updateMany?: Maybe<
@@ -283,8 +281,7 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
-  teste: String;
-  objectives?: Maybe<ObjectiveCreateManyWithoutUserInput>;
+  objectives?: Maybe<ObjectiveCreateManyWithoutAuthorInput>;
 }
 
 export interface ObjectiveUpdateManyMutationInput {
@@ -314,7 +311,7 @@ export interface ObjectiveCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   description: String;
-  user: UserCreateOneWithoutObjectivesInput;
+  author: UserCreateOneWithoutObjectivesInput;
   status?: Maybe<Boolean>;
 }
 
@@ -400,50 +397,47 @@ export interface UserCreateWithoutObjectivesInput {
   name: String;
   email: String;
   password: String;
-  teste: String;
 }
 
-export interface ObjectiveUpsertWithWhereUniqueWithoutUserInput {
+export interface ObjectiveUpsertWithWhereUniqueWithoutAuthorInput {
   where: ObjectiveWhereUniqueInput;
-  update: ObjectiveUpdateWithoutUserDataInput;
-  create: ObjectiveCreateWithoutUserInput;
+  update: ObjectiveUpdateWithoutAuthorDataInput;
+  create: ObjectiveCreateWithoutAuthorInput;
 }
 
 export interface ObjectiveUpdateInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutObjectivesInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutObjectivesInput>;
   status?: Maybe<Boolean>;
 }
 
-export interface ObjectiveUpdateWithWhereUniqueWithoutUserInput {
+export interface ObjectiveUpdateWithWhereUniqueWithoutAuthorInput {
   where: ObjectiveWhereUniqueInput;
-  data: ObjectiveUpdateWithoutUserDataInput;
+  data: ObjectiveUpdateWithoutAuthorDataInput;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  teste?: Maybe<String>;
-  objectives?: Maybe<ObjectiveUpdateManyWithoutUserInput>;
+  objectives?: Maybe<ObjectiveUpdateManyWithoutAuthorInput>;
 }
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  teste?: Maybe<String>;
 }
 
-export interface ObjectiveCreateManyWithoutUserInput {
+export interface ObjectiveCreateManyWithoutAuthorInput {
   create?: Maybe<
-    ObjectiveCreateWithoutUserInput[] | ObjectiveCreateWithoutUserInput
+    ObjectiveCreateWithoutAuthorInput[] | ObjectiveCreateWithoutAuthorInput
   >;
   connect?: Maybe<ObjectiveWhereUniqueInput[] | ObjectiveWhereUniqueInput>;
 }
 
-export interface ObjectiveCreateWithoutUserInput {
+export interface ObjectiveCreateWithoutAuthorInput {
   id?: Maybe<ID_Input>;
   name: String;
   description: String;
@@ -507,20 +501,6 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  teste?: Maybe<String>;
-  teste_not?: Maybe<String>;
-  teste_in?: Maybe<String[] | String>;
-  teste_not_in?: Maybe<String[] | String>;
-  teste_lt?: Maybe<String>;
-  teste_lte?: Maybe<String>;
-  teste_gt?: Maybe<String>;
-  teste_gte?: Maybe<String>;
-  teste_contains?: Maybe<String>;
-  teste_not_contains?: Maybe<String>;
-  teste_starts_with?: Maybe<String>;
-  teste_not_starts_with?: Maybe<String>;
-  teste_ends_with?: Maybe<String>;
-  teste_not_ends_with?: Maybe<String>;
   objectives_every?: Maybe<ObjectiveWhereInput>;
   objectives_some?: Maybe<ObjectiveWhereInput>;
   objectives_none?: Maybe<ObjectiveWhereInput>;
@@ -549,7 +529,6 @@ export interface UserUpdateWithoutObjectivesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  teste?: Maybe<String>;
 }
 
 export interface ObjectiveUpdateManyWithWhereNestedInput {
@@ -568,7 +547,7 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface ObjectiveUpdateWithoutUserDataInput {
+export interface ObjectiveUpdateWithoutAuthorDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
   status?: Maybe<Boolean>;
@@ -587,7 +566,6 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   password: String;
-  teste: String;
   created_at: DateTimeOutput;
   updated_at: DateTimeOutput;
 }
@@ -599,7 +577,6 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  teste: () => Promise<String>;
   created_at: () => Promise<DateTimeOutput>;
   updated_at: () => Promise<DateTimeOutput>;
 }
@@ -611,7 +588,6 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  teste: () => Promise<AsyncIterator<String>>;
   created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
   updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -660,7 +636,7 @@ export interface ObjectivePromise extends Promise<Objective>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   description: () => Promise<String>;
-  user: <T = UserPromise>() => T;
+  author: <T = UserPromise>() => T;
   status: () => Promise<Boolean>;
   created_at: () => Promise<DateTimeOutput>;
   updated_at: () => Promise<DateTimeOutput>;
@@ -672,7 +648,7 @@ export interface ObjectiveSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
+  author: <T = UserSubscription>() => T;
   status: () => Promise<AsyncIterator<Boolean>>;
   created_at: () => Promise<AsyncIterator<DateTimeOutput>>;
   updated_at: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -684,7 +660,7 @@ export interface ObjectiveNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   description: () => Promise<String>;
-  user: <T = UserPromise>() => T;
+  author: <T = UserPromise>() => T;
   status: () => Promise<Boolean>;
   created_at: () => Promise<DateTimeOutput>;
   updated_at: () => Promise<DateTimeOutput>;
@@ -730,7 +706,6 @@ export interface User {
   name: String;
   email: String;
   password: String;
-  teste: String;
   created_at: DateTimeOutput;
   updated_at: DateTimeOutput;
 }
@@ -740,7 +715,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  teste: () => Promise<String>;
   objectives: <T = FragmentableArray<Objective>>(args?: {
     where?: ObjectiveWhereInput;
     orderBy?: ObjectiveOrderByInput;
@@ -761,7 +735,6 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  teste: () => Promise<AsyncIterator<String>>;
   objectives: <T = Promise<AsyncIterator<ObjectiveSubscription>>>(args?: {
     where?: ObjectiveWhereInput;
     orderBy?: ObjectiveOrderByInput;
@@ -782,7 +755,6 @@ export interface UserNullablePromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  teste: () => Promise<String>;
   objectives: <T = FragmentableArray<Objective>>(args?: {
     where?: ObjectiveWhereInput;
     orderBy?: ObjectiveOrderByInput;
