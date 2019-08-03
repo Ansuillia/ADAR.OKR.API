@@ -3,7 +3,6 @@ type User {
   name: String!
   email: String!
   password: String!
-  teste: String!
   objectives: [Objective!]! @relation(name: "ObjectivesByUser", onDelete: CASCADE)
   created_at: DateTime! @createdAt
   updated_at: DateTime! @updatedAt
@@ -13,7 +12,7 @@ type Objective {
   id: ID! @id
   name: String!
   description: String!
-  user: User! @relation(name: "ObjectivesByUser")
+  author: User! @relation(name: "ObjectivesByUser")
   status: Boolean! @default(value: false)
   created_at: DateTime! @createdAt
   updated_at: DateTime! @updatedAt
