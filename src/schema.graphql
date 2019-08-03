@@ -1,0 +1,14 @@
+# import User from './generated/prisma.graphql'
+# import Objective from './generated/prisma.graphql'
+
+type Query {
+  objectivesByUser(author_id: ID!, status: Boolean): [Objective]
+  objective(objective_id: ID): Objective
+  user(id: ID!): User
+}
+
+type Mutation {
+  createObjective(author_id: ID!, name: String!, description: String!): Objective
+  changeObjectiveStatus(objective_id: ID!, status: Boolean!): Objective
+  signup(name: String!, email: String!, password: String!): User
+}

@@ -1,0 +1,20 @@
+type User {
+  id: ID! @id
+  name: String!
+  email: String!
+  password: String!
+  objectives: [Objective!]! @relation(name: "ObjectivesByUser", onDelete: CASCADE)
+  created_at: DateTime! @createdAt
+  updated_at: DateTime! @updatedAt
+}
+
+type Objective {
+  id: ID! @id
+  name: String!
+  description: String!
+  author: User! @relation(name: "ObjectivesByUser")
+  status: Boolean! @default(value: false)
+  created_at: DateTime! @createdAt
+  updated_at: DateTime! @updatedAt
+}
+
